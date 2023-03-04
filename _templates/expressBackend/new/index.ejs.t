@@ -3,18 +3,27 @@ to: output-boilerplates/<%= appName %>/index.js
 force: true
 ---
 const express = require('express');
-const routes =require("<%='./src/routes/'+ appName+'.routes' %>");
+const routes =require('<%="./src/routes/"+ appName+".routes" %>');
 
 const app = express();
 const PORT = process.env.PORT || <%= port %>;
 
+<% if(frontends.length >0) {-%>
+const cors = require('cors');
+const corsOrigins = [
+  <% frontends.map(frontend => { %>
+    '<%= frontend.url + ':' + frontend.port %>',
+  <% }); %>
+];
+
+app.use(cors({
+  origin: corsOrigins,
+}));
+<%}-%>
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', routes);
-<%= if(frontend)
-app.use(cors({
-  origin: ["<%='https://localhost:'+ frontendPort %>"]
-})); %>
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

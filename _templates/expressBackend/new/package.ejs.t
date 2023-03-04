@@ -28,6 +28,7 @@ force: true
     "nodemon": "^2.0.21"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }
