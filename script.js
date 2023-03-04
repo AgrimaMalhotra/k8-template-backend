@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 
 const runHygen = (generator, action, config) => {
     const params = [];
-    Object.keys(config).forEach(key => {
+    Object.keys(config.backend).forEach(key => {
         params.push(`--${key}`);
         params.push((config[key] ? config[key] : 0));
     });
@@ -22,13 +22,11 @@ const runHygen = (generator, action, config) => {
 
 
 const config = {
-    appName: 'fe-boilerplate',
-    // appName: 'test',
-    port: 4005,
-    backendPresent: true,
-    backendUrl: 'http://localhost',
-    backendPort: 5500,
-    
+    backend: {
+      appName: 'be-boilerplate',
+    port: 3000,
+    frontend:true,
+  frontendPort:4005}
 }
 
-runHygen('react', 'new', config);
+runHygen('expressBackend', 'new', config);
